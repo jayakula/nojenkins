@@ -12,7 +12,7 @@ stages {
 
       // Get some code from a GitHub repository
 
-      git 'https://github.com/jayakula/nojenkins.git'
+      checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'a70affd9-4166-4da4-9125-70d044e9c4df', url: 'https://github.com/jayakula/nojenkins.git']]])
 
       // Get the Maven tool.
      
