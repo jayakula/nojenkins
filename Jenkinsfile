@@ -43,7 +43,7 @@ stages {
  }
      stage('Artifact upload') {
       steps {
-     nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'maven-releases', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: 'pipeline-test/target/helloworld.war']], mavenCoordinate: [artifactId: 'helloworld', groupId: 'com.java.helloworld', packaging: 'war', version: '2.0']]]
+     nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'maven-releases', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: '/var/lib/jenkins/workspace/pipeline-test/target/helloworld.war']], mavenCoordinate: [artifactId: 'helloworld', groupId: 'com.java.helloworld', packaging: 'war', version: '2.0']]]
       }
  }
     stage('Deploy War') {
