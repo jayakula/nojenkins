@@ -64,5 +64,13 @@ stages {
         deploy adapters: [tomcat8(credentialsId: 'tomcatuser', path: '', url: 'http://3.86.239.121:8080/')], contextPath: null, war: '**/*.war'
       }
  }
-}       
+} 
+    post {
+        success {
+            mail to:"jayachandraakula@gmail.com", subject:"SUCCESS: ${currentBuild.fullDisplayName}", body: "Build success"
+        }
+        failure {
+            mail to:"jayachandraakula@gmail.com", subject:"FAILURE: ${currentBuild.fullDisplayName}", body: "Build failed"
+        }
+    }
 }
