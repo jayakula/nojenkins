@@ -41,6 +41,19 @@ stages {
       
       }
  }
+ stage('Sonarqube') {
+    environment {
+        scannerHome = tool 'sonar'
+    }
+    steps {
+        withSonarQubeEnv('sonarqube') {
+            sh "${scannerHome}/bin/sonar-scanner"
+        }
+        timeout(time: 10, unit: 'MINUTES') {
+            waitForQualityGate abortPipeline: true
+        }
+    }
+}   
      stage('Artifact upload') {
       steps {
      nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'maven-releases', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: '/var/lib/jenkins/workspace/pipeline-test/target/helloworld.war']], mavenCoordinate: [artifactId: 'helloworld', groupId: 'com.java.helloworld', packaging: 'war', version: '3.0']]]
