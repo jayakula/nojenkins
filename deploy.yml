@@ -1,0 +1,20 @@
+---
+- hosts: webservers
+  become: true
+  tasks:
+  - name: Stop Tomcat
+    service:
+      name: tomcat
+      state: stopped
+  - name: Clean the existing war file
+    file:
+      path: /root/apache-tomcat-8.5.50/webapps/helloworld-3.0.war
+      state: absent    
+  - name: Deploy War File
+    get_url:
+       url: http://3.87.179.179:8081/nexus/service/local/artifact/maven/redirect?r=releases&g=com.java.helloworld&a=helloworld&p=war&v=LATEST
+       dest: /root/apache-tomcat-8.5.50/webapps/helloworld-3.0.war
+  - name: Start Tomcat
+    service:
+      name: tomcat
+      state: started
